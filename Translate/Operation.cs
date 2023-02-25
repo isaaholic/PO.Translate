@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Translate
 {
+    // 1.0.3
     public static class Operation
     {
         private static StreamReader? stream;
