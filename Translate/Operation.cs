@@ -110,6 +110,7 @@ namespace Translate
                             lines.Add(line);
                             break;
                     }
+                    Console.WriteLine(lines[lines.Count-1]);
                 }
                 await File.WriteAllLinesAsync(Directory.GetCurrentDirectory() + "\\poFile\\new.po", lines);
             }
