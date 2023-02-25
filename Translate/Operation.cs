@@ -1,4 +1,5 @@
 ﻿using Google.Cloud.Translation.V2;
+using System.Diagnostics;
 using System.Text;
 
 namespace Translate
@@ -7,6 +8,7 @@ namespace Translate
     {
         private static StreamReader? stream;
         private static readonly string path = Directory.GetCurrentDirectory() + "\\poFile\\co.po";
+        private static int fileLineCount;
         //private static List<string> preparedList;
 
         public static string APIKey { private get; set; }
@@ -18,6 +20,7 @@ namespace Translate
             if (File.Exists(path))
             {
                 stream = new StreamReader(path);
+                fileLineCount = File.ReadAllLines(path).Length;
                 return true;
             }
             return false;
@@ -28,6 +31,8 @@ namespace Translate
             bool isOpen = Open();
             if (isOpen)
             {
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
                 //preparedList = new List<string>()
                 //{
                 //    "msgid \"\"",
@@ -58,6 +63,7 @@ namespace Translate
                 {
                     StringBuilder unTranslatedLine = new();
                     StringBuilder poLine = new StringBuilder();
+                    TranslationResult? response;
                     string detectedLine;
                     bool getOver = false;
 
@@ -95,23 +101,47 @@ namespace Translate
                             }
                             poLine.Clear();
 
-                            var response = client.TranslateText(unTranslatedLine.ToString(), LanguageCodes.Azerbaijani, LanguageCodes.English);
-
-                            stream.ReadLine();
-
-                            poLine.Append("msgstr");
-                            poLine.Append(response.TranslatedText);
+                            line = stream.ReadLine();
+                            detectedLine = line.ToString().Remove(5, line.Length - 5);
+                            if (detectedLine == "msgst")
+                            {
+                                poLine.Append("msgstr");
+                                if (unTranslatedLine[unTranslatedLine.Length - 1] == unTranslatedLine[unTranslatedLine.Length - 2] && unTranslatedLine[unTranslatedLine.Length - 1] == '"')
+                                {
+                                    response = client.TranslateText(unTranslatedLine.ToString().Remove(unTranslatedLine.Length - 1, 1), LanguageCodes.Azerbaijani, LanguageCodes.English);
+                                    poLine.Append(response.TranslatedText+'"');
+                                }
+                                else
+                                {
+                                    response = client.TranslateText(unTranslatedLine.ToString(), LanguageCodes.Azerbaijani, LanguageCodes.English);
+                                    poLine.Append(response.TranslatedText.Replace('“', '"').Replace('”', '"'));
+                                }
+                                lines.Add(poLine.ToString());
+                                if (getOver == true)
+                                    stream.ReadLine();
+                            }
+                            else
+                            {
+                                poLine.Append(line);
+                                lines.Add(poLine.ToString());
+                            }
+                            break;
+                        case "msgst":
+                            unTranslatedLine.Append(line);
+                            response = client.TranslateText(unTranslatedLine.ToString(), LanguageCodes.Azerbaijani, LanguageCodes.English);
+                            poLine.Append(response.TranslatedText.Replace('“','"').Replace('”','"'));
                             lines.Add(poLine.ToString());
-                            if (getOver == true)
-                                stream.ReadLine();
-                            poLine.Clear();
                             break;
                         default:
                             lines.Add(line);
                             break;
                     }
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine($"Progress - {lines.Count}/{fileLineCount}");
                 }
                 await File.WriteAllLinesAsync(Directory.GetCurrentDirectory() + "\\poFile\\new.po", lines);
+                stopwatch.Stop();
+                Console.WriteLine($"Time Elapsed: {stopwatch.Elapsed}");
             }
         }
     }
