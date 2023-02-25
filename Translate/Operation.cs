@@ -7,7 +7,7 @@ namespace Translate
     {
         private static StreamReader? stream;
         private static readonly string path = Directory.GetCurrentDirectory() + "\\poFile\\co.po";
-        private static List<string> preparedList;
+        //private static List<string> preparedList;
 
         public static string APIKey { private get; set; }
         public static string? ProjectName { get; set; }
@@ -28,17 +28,17 @@ namespace Translate
             bool isOpen = Open();
             if (isOpen)
             {
-                preparedList = new List<string>()
-                {
-                    "msgid \"\"",
-                    "msgstr \"\"",
-                    "\"MIME-Version: 1.0\\n\"",
-                    "\"Content-Type: text/plain; charset=UTF-8\\n\"",
-                    "\"Content-Transfer-Encoding: 8bit\\n\"",
-                    "\"X-Generator: isaaholic\\n\"",
-                    $"\"Project-Id-Version: {ProjectName}\\n\"",
-                    "\"Language: az\\n\""
-                };
+                //preparedList = new List<string>()
+                //{
+                //    "msgid \"\"",
+                //    "msgstr \"\"",
+                //    "\"MIME-Version: 1.0\\n\"",
+                //    "\"Content-Type: text/plain; charset=UTF-8\\n\"",
+                //    "\"Content-Transfer-Encoding: 8bit\\n\"",
+                //    "\"X-Generator: isaaholic\\n\"",
+                //    $"\"Project-Id-Version: {ProjectName}\\n\"",
+                //    "\"Language: az\\n\""
+                //};
 
                 if (File.Exists(Directory.GetCurrentDirectory() + "\\poFile\\new.po"))
                 {
@@ -48,11 +48,11 @@ namespace Translate
                     using var sw = new StreamWriter(Directory.GetCurrentDirectory() + "\\poFile\\new.po");
                 }
                 List<string> lines = new();
-                foreach (var line in preparedList)
-                {
-                    lines.Add(line);
-                    stream.ReadLine();
-                }
+                //foreach (var line in preparedList)
+                //{
+                //    lines.Add(line);
+                //    stream.ReadLine();
+                //}
                 var client = TranslationClient.CreateFromApiKey(APIKey);
                 while (true)
                 {
