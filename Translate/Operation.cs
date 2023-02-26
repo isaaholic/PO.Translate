@@ -5,45 +5,62 @@ using System.Text;
 namespace Translate
 {
     // 1.1.0
+    // 1.1.1
     public static class Operation
     {
         private static StreamReader? stream;
         private static List<string> lines = new List<string>();
+        public static TranslationClient client { private get; set; } // Google Cloud API Key
+        private static bool isOpen = false;
+        private static string newFilePath;
 
-        public static string Path { get; set; } // path of Folder
-        public static string APIKey { private get; set; } // Google Cloud API Key
-        public static string FileName { get; set; } // without .po
-        public static int FileLineCount { get; set; } // count of lines of file
+        public static string Path { get; private set; } // path of Folder
+        public static string FileName { get; private set; } // without .po
+        public static int FileLineCount { get; private set; } // count of lines of file
 
 
-        private static bool Open()
+
+        public static void OpenFile(string fileName, string folderPath)
         {
-            if (File.Exists(Path + "\\" + FileName + ".po"))
+            try
             {
-                stream = new StreamReader(Path + "\\" + FileName + ".po");
-                FileLineCount = File.ReadAllLines(Path + "\\" + FileName + ".po").Length;
-                return true;
+                stream = new StreamReader(folderPath + "\\" + fileName + ".po");
+                FileLineCount = File.ReadAllLines(folderPath + "\\" + fileName + ".po").Length;
+                Path = folderPath;
+                FileName = fileName;
+                isOpen = true;
+                newFilePath = $"{Path}\\{FileName}_new.po";
             }
-            return false;
+            catch (Exception)
+            {
+                // Add Log
+            }
+        }
+
+        public static void CreateClientFromApiKey(string apiKey)
+        {
+            client = TranslationClient.CreateFromApiKey(apiKey);
+            // Add Log
+        }
+
+        private static void DeleteNewFile()
+        {
+            if (File.Exists(newFilePath))
+            {
+                File.Delete(newFilePath);
+            }
+            using var sw = new StreamWriter(newFilePath);
         }
 
         public static async void Translate()
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            bool isOpen = Open();
             if (isOpen)
             {
-                var client = TranslationClient.CreateFromApiKey(APIKey);
-                List<string> unTranslatedLines = new List<string>();
+                List<string> unTranslatedLines = new();
+                DeleteNewFile();
 
-                if (File.Exists($"{Path}\\{FileName}_new.po"))
-                {
-                    File.Delete($"{Path}\\{FileName}_new.po");
-                }
-                {
-                    using var sw = new StreamWriter($"{Path}\\{FileName}_new.po");
-                }
                 while (true)
                 {
                     var line = stream.ReadLine();
@@ -51,11 +68,10 @@ namespace Translate
                     if (line == null)
                         break;
 
-                    StringBuilder poLine = new StringBuilder();
+                    StringBuilder poLine = new();
                     StringBuilder unTranslatedLine = new();
                     TranslationResult? response;
                     string detectedLine;
-                    bool getOver = false;
 
                     if (line.Length > 5 && line.Remove(5, line.Length - 5) == "msgid")
                     {
@@ -86,7 +102,7 @@ namespace Translate
                                 response = client.TranslateText(unTranslatedl.ToString(), LanguageCodes.Azerbaijani, LanguageCodes.English);
                                 poLine.Append(response.TranslatedText.Replace('“', '"').Replace('”', '"'));
                             }
-                            if (unTranslatedLines[unTranslatedLines.Count-1] != unTranslatedl)
+                            if (unTranslatedLines[unTranslatedLines.Count - 1] != unTranslatedl)
                                 poLine.AppendLine();
                             if (once)
                             {
@@ -126,12 +142,12 @@ namespace Translate
                         unTranslatedLines.Clear();
                     }
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    //Console.WriteLine($"Progress - {lines.Count}/{FileLineCount}");
+                    //Console.WriteLine($"Progress - {lines.Count}/{FileLineCount}"); // AddLog
                 }
-                await File.WriteAllLinesAsync(Path + "\\" + FileName + "_new.po", lines);
+                await File.WriteAllLinesAsync(newFilePath, lines);
             }
             stopwatch.Stop();
-            Console.WriteLine($"Time Elapsed: {stopwatch.Elapsed}");
+            // Add Log
         }
     }
 }
