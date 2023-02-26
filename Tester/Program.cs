@@ -10,8 +10,13 @@ Console.ForegroundColor = ConsoleColor.Gray;
 Console.WriteLine("https://support.google.com/googleapi/answer/6158862?hl=en");
 Operation.APIKey = Console.ReadLine();
 Console.ForegroundColor = ConsoleColor.Green;
-Console.WriteLine("Please, Enter Project Name: ");
-Operation.ProjectName = Console.ReadLine();
+Console.WriteLine("Please, Enter File Folder Path: (without file)");
+Console.ForegroundColor = ConsoleColor.Gray;
+Operation.Path = Console.ReadLine();
+Console.ForegroundColor = ConsoleColor.Green;
+Console.WriteLine("Please, Enter File Name: (without .po)");
+Console.ForegroundColor = ConsoleColor.Gray;
+Operation.FileName = Console.ReadLine();
 Console.ForegroundColor = ConsoleColor.Blue;
 Console.WriteLine("Operation has started. Please wait...");
 
