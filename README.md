@@ -7,7 +7,7 @@ Maybe you can mention me or this repo in the acknowledgements too
 -->
 <div align="center">
 
-  <h1>PO File Translator</h1>
+  <h1>PO File Translator v1.1.0</h1>
   <img src="https://i.ibb.co/zXcd9Vp/Screenshot-124.png" alt="Screenshot-124" border="0">
   
   <p>
@@ -96,19 +96,21 @@ This project uses .net 6 version
 Install package with nuget
 
 ```bash
-  dotnet add package isaaholic.POTranslate.Core --version 1.0.3
+  dotnet add package isaaholic.POTranslate.Core --version 1.1.0
 ```
 
 
 <!-- Usage -->
 ## :eyes: Usage
 
-If you want to use it correctly, you must create poFile\co.po file and copy po inside co.po file.
+If you want to use it correctly, you must assign file name and path of file folder.
 
 
 ```csharp
 using Translate;
 Operation.APIKey = Console.ReadLine();
+Operation.Path = Console.ReadLine();
+Operation.FileName = Console.ReadLine();
 Operation.Translate();
 ```
 
