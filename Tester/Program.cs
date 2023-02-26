@@ -1,4 +1,4 @@
-﻿using isaaholic.POtranslate.Core;
+﻿using isaaholic.POTranslate.Core;
 
 Console.ForegroundColor = ConsoleColor.Yellow;
 Console.WriteLine("Welcome to .po File Translator Application V1.1.0");
