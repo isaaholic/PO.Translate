@@ -1,10 +1,28 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PackageId>isaaholic.POTranslate.Core</PackageId>
+    <Version>1.0.3</Version>
+    <Authors>isaaholic</Authors>
+    <Product>Translator for .po files</Product>
+    <PackageProjectUrl>https://github.com/isaaholic/PO.Translate</PackageProjectUrl>
+    <Description>it can translate .po files fro one language to another one.
+(just translate to Azernaijani at the moment. it will come update.)</Description>
+    <PackageIcon>strawberry.png</PackageIcon>
+    <RepositoryUrl>https://github.com/isaaholic/PO.Translate</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>po,po files, translate, potranslate</PackageTags>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\..\Downloads\strawberry.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Google.Cloud.Translation.V2" Version="3.1.0" />
