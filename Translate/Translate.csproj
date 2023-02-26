@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>isaaholic.POTranslate.Core</PackageId>
-    <Version>1.0.3</Version>
+    <Version>1.1.0</Version>
     <Authors>isaaholic</Authors>
     <Product>Translator for .po files</Product>
     <PackageProjectUrl>https://github.com/isaaholic/PO.Translate</PackageProjectUrl>
@@ -15,14 +15,10 @@
     <RepositoryUrl>https://github.com/isaaholic/PO.Translate</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>po,po files, translate, potranslate</PackageTags>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReadmeFile></PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\..\..\Downloads\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
     <None Include="..\..\..\..\..\Downloads\strawberry.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>

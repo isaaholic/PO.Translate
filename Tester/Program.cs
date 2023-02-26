@@ -1,7 +1,7 @@
 ﻿using Translate;
 
 Console.ForegroundColor = ConsoleColor.Yellow;
-Console.WriteLine("Welcome to .po File Translator Application V1.0.3");
+Console.WriteLine("Welcome to .po File Translator Application V1.1.0");
 Console.ForegroundColor = ConsoleColor.Red;
 Console.WriteLine("if you want to exit use CTRL+C");
 Console.ForegroundColor = ConsoleColor.Green;
