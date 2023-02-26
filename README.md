@@ -7,7 +7,7 @@ Maybe you can mention me or this repo in the acknowledgements too
 -->
 <div align="center">
 
-  <h1>PO File Translator v1.1.0</h1>
+  <h1>PO File Translator v1.1.1</h1>
   <img src="https://i.ibb.co/zXcd9Vp/Screenshot-124.png" alt="Screenshot-124" border="0">
   
   <p>
@@ -71,11 +71,12 @@ Maybe you can mention me or this repo in the acknowledgements too
 ### :key: Environment Variables
 
 To run this project, you will need to add the following environment variables
+<a href="https://support.google.com/googleapi/answer/6158862?hl=en">Google Cloud API</a>
 
 `APIKey` 
 
 ```csharp
-Operation.APIKey = "your_api_key"
+Operation.CreateClientFromApiKey(APIKey);
 ```
 
 <!-- Getting Started -->
@@ -96,7 +97,7 @@ This project uses .net 6 version
 Install package with nuget
 
 ```bash
-  dotnet add package isaaholic.POTranslate.Core --version 1.1.0
+  dotnet add package isaaholic.POTranslate.Core --version 1.1.1
 ```
 
 
@@ -107,10 +108,9 @@ If you want to use it correctly, you must assign file name and path of file fold
 
 
 ```csharp
-using Translate;
-Operation.APIKey = Console.ReadLine();
-Operation.Path = Console.ReadLine();
-Operation.FileName = Console.ReadLine();
+using isaaholic.POTranslate.Core;
+Operation.CreateClientFromApiKey(APIKey);
+Operation.OpenFile(fileName, path);
 Operation.Translate();
 ```
 
