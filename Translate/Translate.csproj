@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>isaaholic.POTranslate.Core</PackageId>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <Authors>isaaholic</Authors>
     <Product>Translator for .po files</Product>
     <PackageProjectUrl>https://github.com/isaaholic/PO.Translate</PackageProjectUrl>
@@ -14,8 +14,9 @@
     <PackageIcon>strawberry.png</PackageIcon>
     <RepositoryUrl>https://github.com/isaaholic/PO.Translate</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageTags>po,po files, translate, potranslate</PackageTags>
+    <PackageTags>po,po files, translate, potranslate, core</PackageTags>
     <PackageReadmeFile></PackageReadmeFile>
+    <AnalysisLevel>6.0-minimum</AnalysisLevel>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,6 +28,7 @@
 
   <ItemGroup>
     <PackageReference Include="Google.Cloud.Translation.V2" Version="3.1.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
   </ItemGroup>
 
 </Project>
