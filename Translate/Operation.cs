@@ -21,7 +21,7 @@ namespace Translate
             if (File.Exists(Path + "\\" + FileName + ".po"))
             {
                 stream = new StreamReader(Path + "\\" + FileName + ".po");
-                fileLineCount = File.ReadAllLines(Path + "\\" + FileName + ".po").Length;
+                FileLineCount = File.ReadAllLines(Path + "\\" + FileName + ".po").Length;
                 return true;
             }
             return false;
@@ -126,7 +126,7 @@ namespace Translate
                         unTranslatedLines.Clear();
                     }
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    //Console.WriteLine($"Progress - {lines.Count}/{fileLineCount}");
+                    //Console.WriteLine($"Progress - {lines.Count}/{FileLineCount}");
                 }
                 await File.WriteAllLinesAsync(Path + "\\" + FileName + "_new.po", lines);
             }
