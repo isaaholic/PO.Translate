@@ -3,7 +3,7 @@ using Serilog;
 using System.Diagnostics;
 using System.Text;
 
-namespace isaaholic.POtranslate.Core;
+namespace isaaholic.POTranslate.Core;
 
 // 1.1.1
 public static class Operation
